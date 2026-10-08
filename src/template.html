@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Off the Shelf</title>
+<meta name="description" content="Half the French paintings of 1840 to 1929 in two American museums sit within a centimetre of a colourman's numbered stock canvas. Shrink or stretch that catalogue by four per cent and they stop fitting. And the size called marine almost never held the sea.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,700;6..96,800&family=Libre+Franklin:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ------------------------------------------------------------------ *
+ * A colourman's price list on primed linen. Three inks, one per      *
+ * stock shape: terracotta figure, sap-green paysage, marine blue.    *
+ * The two museums are never pooled: Met in madder, Chicago in ochre. *
+ * Grey is what a decoy catalogue catches by chance.                  *
+ * ------------------------------------------------------------------ */
+:root{
+  --ground:#f2ede2; --panel:#fbf8f1; --sunk:#ebe4d5;
+  --ink:#1e1b16; --ink2:#4d473d; --ink3:#8a8274; --rule:#d8cfbd; --rule2:#e6dfd0;
+  --F:#a8452c; --P:#4a7a39; --M:#2c5d8c;
+  --m0:#8c2f39; --m1:#b07a1f; --decoy:rgba(30,27,22,.13); --off:rgba(30,27,22,.22);
+  --warn:#b4321f; --ok:#2f6f3f;
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --ground:#17140f; --panel:#201c16; --sunk:#1b1813;
+  --ink:#efe8da; --ink2:#c3baa8; --ink3:#8f8676; --rule:#3a332a; --rule2:#2c2720;
+  --F:#e27f62; --P:#93c278; --M:#77a9da;
+  --m0:#e4808a; --m1:#e6b55c; --decoy:rgba(239,232,218,.14); --off:rgba(239,232,218,.25);
+  --warn:#f0806b; --ok:#7fc98f;
+}}
+:root[data-theme="dark"]{
+  --ground:#17140f; --panel:#201c16; --sunk:#1b1813;
+  --ink:#efe8da; --ink2:#c3baa8; --ink3:#8f8676; --rule:#3a332a; --rule2:#2c2720;
+  --F:#e27f62; --P:#93c278; --M:#77a9da;
+  --m0:#e4808a; --m1:#e6b55c; --decoy:rgba(239,232,218,.14); --off:rgba(239,232,218,.25);
+  --warn:#f0806b; --ok:#7fc98f;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--ground);color:var(--ink);font:16px/1.62 "Libre Franklin",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+@media(min-width:700px){.wrap{padding:0 28px}}
+h1,h2,h3{font-family:"Bodoni Moda",Didot,Georgia,serif;line-height:1.04;margin:0;font-weight:700}
+.mono,code{font-family:"IBM Plex Mono",monospace}
+a{color:inherit;text-decoration-color:var(--ink3);text-underline-offset:3px}
+.k{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3)}
+section{margin-top:70px}
+section h2{font-size:clamp(32px,4.4vw,48px)}
+.lede{font-size:18px;color:var(--ink2);max-width:64ch;margin:12px 0 0}
+p{max-width:68ch}
+.F{color:var(--F);font-weight:600} .P{color:var(--P);font-weight:600} .M{color:var(--M);font-weight:600}
+.m0{color:var(--m0);font-weight:600} .m1{color:var(--m1);font-weight:600}
+
+/* hero */
+header{padding:40px 0 10px;display:grid;gap:28px}
+@media(min-width:900px){header{grid-template-columns:1fr 330px;align-items:end}}
+.eyebrow{font:500 12px "IBM Plex Mono",monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--ink3)}
+h1{font-size:clamp(58px,10vw,118px);font-weight:800;letter-spacing:-.02em;margin-top:6px}
+.finding{font-family:"Bodoni Moda",Georgia,serif;font-size:clamp(22px,2.8vw,31px);line-height:1.22;font-weight:500;max-width:32ch;margin:16px 0 0}
+.finding b{font-weight:800}
+.dek{color:var(--ink2);max-width:62ch;margin-top:16px}
+#stack{width:100%;max-width:330px}
+.nums{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:26px}
+@media(min-width:820px){.nums{grid-template-columns:repeat(4,1fr)}}
+.nums>div{background:var(--panel);padding:16px 18px}
+.nums .v{font:800 36px/1 "Bodoni Moda",Georgia,serif}
+.nums .d{font-size:13px;color:var(--ink2);margin-top:6px;line-height:1.4}
+.withheld{border:1px solid var(--warn);color:var(--warn);padding:12px 14px;border-radius:3px;margin-top:18px;font:500 14px "IBM Plex Mono",monospace;display:none}
+
+/* cards and charts */
+.card{background:var(--panel);border:1px solid var(--rule);border-radius:3px;padding:18px 18px 14px;margin-top:22px}
+.card h3{font-size:24px}
+.card .sub{font-size:14px;color:var(--ink2);margin:4px 0 0;max-width:72ch}
+svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font-family:"IBM Plex Mono",monospace;font-size:11px;fill:var(--ink3)}
+.scwrap{overflow-x:auto;margin-top:6px}
+.scwrap svg{min-width:680px}
+.tip{min-height:3.2em;font:12.5px/1.5 "IBM Plex Mono",monospace;color:var(--ink2);margin-top:8px}
+.verdict{font:500 13px/1.5 "IBM Plex Mono",monospace;margin-top:10px;padding:8px 10px;border-radius:3px;background:var(--sunk)}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--warn)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.chip{font:500 12.5px "IBM Plex Mono",monospace;padding:6px 11px;border-radius:999px;border:1px solid var(--rule);
+  background:var(--panel);color:var(--ink2);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+.chip:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--F);outline-offset:2px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font:12px "IBM Plex Mono",monospace;color:var(--ink2);margin-top:10px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.two{display:grid;gap:22px;grid-template-columns:1fr}
+@media(min-width:900px){.two{grid-template-columns:1fr 1fr}}
+.two .card{margin-top:0}
+
+/* tables */
+.scroller{overflow-x:auto;margin-top:12px}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--rule2);vertical-align:middle}
+th{font:400 10.5px "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+td.n{font-family:"IBM Plex Mono",monospace;text-align:right;white-space:nowrap}
+td.bar{width:34%}
+.bar>span{display:block;height:9px;border-radius:1px}
+.matrix td.n{font-size:15px}
+.matrix .hi{font-weight:600;color:var(--ink)}
+.matrix .lo{color:var(--ink3)}
+
+/* stacked format bars */
+.fmt{display:grid;grid-template-columns:96px 1fr 44px;gap:8px;align-items:center;margin-top:8px;font-size:13px}
+.fmt .lab{color:var(--ink2)}
+.fmt .st{display:flex;height:22px;border-radius:2px;overflow:hidden;background:var(--sunk)}
+.fmt .st span{display:block;height:100%;font:600 11px/22px "IBM Plex Mono",monospace;color:#fff;text-align:center;overflow:hidden;white-space:nowrap}
+.fmt .cnt{font:12px "IBM Plex Mono",monospace;color:var(--ink3);text-align:right}
+
+/* methods */
+.methods{background:var(--panel);border:1px solid var(--rule);border-radius:3px;padding:22px 20px;margin-top:22px}
+.methods h3{font-size:22px;margin-top:28px}
+.methods h3:first-child{margin-top:0}
+.methods li{margin-bottom:8px;color:var(--ink2);max-width:78ch}
+.methods li b{color:var(--ink)}
+.methods table{max-width:640px}
+footer{margin:70px 0 50px;color:var(--ink3);font-size:13px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div>
+    <div class="eyebrow">Toiles &agrave; peindre &middot; figure &middot; paysage &middot; marine</div>
+    <h1>Off the Shelf</h1>
+    <p class="finding" id="finding">Half the French paintings made between 1840 and 1929 in two American museums are on a canvas bought <b>off the shelf</b>: both sides within a centimetre of a colourman's numbered stock size.</p>
+    <div class="withheld" id="withheld"></div>
+    <p class="dek">Paris colourmen sold primed canvas ready-stretched in sixty fixed sizes, numbered 0 to 120 in three shapes called <span class="F">figure</span>, <span class="P">paysage</span> and <span class="M">marine</span>. Nobody recorded which painters bought them. The paintings did: their measurements sit in two museum databases, taken by different hands, in different units. Every figure below is computed in your browser from <span id="nRows">5,975</span> paintings on canvas.</p>
+  </div>
+  <svg id="stack" viewBox="0 110 330 135" role="img" aria-label="The figure, paysage and marine stock sizes from number 0 to number 40, drawn to scale and nested"></svg>
+</header>
+<div class="nums" id="nums"></div>
+
+<section id="grid">
+  <h2>Sixty rectangles</h2>
+  <p class="lede">Each painting is a dot at its long side and short side. Each little square is one of the colourman's sixty stock sizes, drawn one centimetre wide each way: the tolerance. A dot inside a square is <em>on the grid</em>. Hover a dot to see the painting.</p>
+  <div class="card">
+    <div class="chips" role="group" aria-label="Which paintings" id="grpChips"></div>
+    <div class="chips" role="group" aria-label="Which museum" id="musChips"></div>
+    <div class="scwrap"><svg id="scatter" viewBox="0 0 960 560" role="img" aria-label="Scatter of painting sizes against the stock canvas grid"></svg></div>
+    <div class="legend"><span><i style="background:var(--F)"></i>figure</span><span><i style="background:var(--P)"></i>paysage</span><span><i style="background:var(--M)"></i>marine</span><span><i style="background:var(--ink)"></i>painting on the grid</span><span><i style="background:var(--off)"></i>painting off it</span></div>
+    <div class="tip" id="scTip">&nbsp;</div>
+    <div class="verdict" id="scStat"></div>
+  </div>
+</section>
+
+<section id="control">
+  <h2>Stretch the catalogue</h2>
+  <p class="lede">Sixty squares cover a fair share of the plausible sizes, so some paintings land on the grid by chance. To see how many, multiply every stock size by a constant and count again. A real catalogue should fit at exactly one scale and nowhere near it. This is the control: if a decoy catalogue four per cent or more away ever catches half as many paintings as the real one, the headline above is withdrawn.</p>
+  <div class="card">
+    <h3>Share on the grid, as the catalogue is shrunk or stretched</h3>
+    <p class="sub">French paintings, 1840 to 1929, each museum on its own line. The faint lines are American paintings of the same years tried against the same French catalogue.</p>
+    <svg id="sweep" viewBox="0 0 960 360" role="img" aria-label="Hit rate against catalogue scale factor"></svg>
+    <div class="legend"><span><i style="background:var(--m0)"></i>Metropolitan Museum</span><span><i style="background:var(--m1)"></i>Art Institute of Chicago</span><span><i style="background:var(--ink3);opacity:.5"></i>American paintings, same years</span></div>
+    <div class="tip" id="swTip">&nbsp;</div>
+    <div class="verdict" id="swVerdict"></div>
+  </div>
+</section>
+
+<section id="wrong">
+  <h2>The wrong catalogue</h2>
+  <p class="lede">A second control, from the other side of the Atlantic. In about 1900 F.&nbsp;W. Devoe &amp; Co. of New York listed forty-five stock stretched canvases in inches (16 by 20, 20 by 24, 25 by 30). If the method finds grids that are not there, French paintings will fit the American list too. They do not: they fit it no better than a decoy. American paintings fit their own list, and a sixth of them fit the Paris list as well.</p>
+  <div class="card">
+    <div class="scroller"><table class="matrix" id="matrix"></table></div>
+    <div class="verdict" id="mxVerdict"></div>
+  </div>
+</section>
+
+<section id="time">
+  <h2>When the grid arrived</h2>
+  <p class="lede">French paintings by twenty-year span of their start date. The grey ticks are the decoy level for the same paintings. Spans with fewer than twelve paintings in a museum are left out, and the line breaks there. The grid does not start with the Impressionists: at the Met it is already well above chance in the early 1700s, on a few dozen paintings.</p>
+  <div class="card">
+    <svg id="timeline" viewBox="0 0 960 330" role="img" aria-label="Share on the grid by period, per museum"></svg>
+    <div class="tip" id="tlTip">&nbsp;</div>
+  </div>
+</section>
+
+<section id="marine">
+  <h2>Figure, for everything</h2>
+  <p class="lede">The three shapes carry subject names: figure, landscape, seascape. The folklore of the trade is that they were cut for those subjects. Among the French paintings that sit on the grid, here is which shape each subject was painted on, using each museum's own subject tags. Both museums agree on the big thing: the near-square figure held most of every subject, the sea included, and marine was the rarest shape for every subject. They disagree on the small one, and the numbers there are too few to settle it.</p>
+  <div class="two">
+    <div class="card"><h3 class="m0">Metropolitan Museum</h3><div id="fmt0"></div></div>
+    <div class="card"><h3 class="m1">Art Institute of Chicago</h3><div id="fmt1"></div></div>
+  </div>
+  <div class="verdict" id="fmtVerdict"></div>
+</section>
+
+<section id="who">
+  <h2>Who bought them</h2>
+  <p class="lede">Every artist with at least six canvases dated 1840 to 1929 in a museum, whatever their nationality. The two museums spell names differently and are listed apart. Pierre Bonnard, who pinned unstretched canvas to his wall and cut each picture out when it was finished, is the painter the method should miss, and it does. The Americans split by where they worked: Mary Cassatt, who lived in Paris, is mostly on the grid; John Frederick Kensett, Winslow Homer and George Inness, who did not, almost never are.</p>
+  <div class="two">
+    <div class="card"><h3 class="m0">Metropolitan Museum</h3><div class="scroller"><table id="art0"></table></div></div>
+    <div class="card"><h3 class="m1">Art Institute of Chicago</h3><div class="scroller"><table id="art1"></table></div></div>
+  </div>
+</section>
+
+<section id="methods">
+  <h2>Methods</h2>
+  <div class="methods">
+    <h3>Sources</h3>
+    <ul>
+      <li><b>The Metropolitan Museum of Art, Open Access CSV</b> (<a href="https://github.com/metmuseum/openaccess">metmuseum/openaccess</a>, MetObjects.csv, 318 MB through Git LFS), read <span id="fMet"></span>. Object data CC0. Every object classed <i>Paintings</i>, or, in the American Wing, named <i>Painting</i>, whose medium mentions canvas.</li>
+      <li><b>Art Institute of Chicago, public API</b> (<a href="https://api.artic.edu/docs/">api.artic.edu</a>), every artwork typed <i>Painting</i>, read <span id="fAic"></span>. Data CC0 (descriptions, not used here, are CC BY). Medium mentions canvas.</li>
+      <li><b>The French stock sizes</b>: the table of the sixty figure, paysage and marine sizes on English Wikipedia, <a href="https://en.wikipedia.org/wiki/French_standard_sizes_for_oil_paintings">French standard sizes for oil paintings</a> (CC BY-SA 4.0), which cites Beatrix Haaf, <i>Zeitschrift f&uuml;r Kunsttechnologie und Konservierung</i> 1 (1987). It is a modern chart; see the failed half below.</li>
+      <li><b>The American stock sizes</b>: F.&nbsp;W. Devoe &amp; Co., <i>Priced catalogue of artists' materials</i>, New York and Chicago, about 1900, pages 16 and 17, "Single Prime, Smooth, or Roman Canvas on Stretchers", scanned by Columbia University Libraries for the <a href="https://archive.org/details/pricedcatalogueo00fwde">Internet Archive</a> (public domain), read from its OCR text.</li>
+    </ul>
+    <h3>What was measured, and how</h3>
+    <ul>
+      <li><b>Size.</b> The first height and width in centimetres in each museum's dimension string that is not labelled as the frame. The Met measures in inches to the nearest eighth and gives centimetres in brackets; Chicago gives centimetres first. Paintings whose dimension string mentions an added strip, an enlargement or a sight size (<span id="nAlt"></span>) are kept on the scatter and left out of every rate.</li>
+      <li><b>On the grid.</b> Long and short side both within 1.0 cm of the same stock size (the larger of the two differences is at most 1 cm). Orientation is ignored: a stock canvas can hang either way.</li>
+      <li><b>Decoy catalogues.</b> The sixty sizes multiplied by 0.90, 0.92, 0.94, 0.96, 1.04, 1.06, 1.08 and 1.10; the decoy level is the mean of those eight. The sweep chart runs every scale from 0.80 to 1.20.</li>
+      <li><b>Two measures, never pooled.</b> The Met and the Art Institute catalogued their paintings independently, in different units and different formats. Every rate is computed for each museum separately and the two are shown side by side; nothing on this page averages them.</li>
+      <li><b>Nationality</b> is the artist's, as each museum records it (first listed, before any comma). <b>Subject</b> comes from the museums' own tags: any sea, boat, ship, harbour or beach tag makes a seascape; otherwise a portrait tag a portrait; otherwise a landscape, river, mountain or forest tag a landscape.</li>
+    </ul>
+    <h3>Instrument findings</h3>
+    <ul>
+      <li><b>The Met's American Wing has no classification.</b> All 18,532 of its objects leave the Classification column blank, so the obvious filter, <code>Classification == "Paintings"</code>, silently drops its 1,006 paintings on canvas. Before the fix, the American control rested on 8 paintings from 1840 to 1899 instead of <span id="nAm"></span>.</li>
+      <li><b>Chicago's structured sizes round down to the centimetre.</b> The API's <code>dimensions_detail</code> field gives La Grande Jatte as 207 &times; 308 when the label says 207.5 &times; 308.1. That is a shift of up to a centimetre, the whole tolerance, and it does not fail safe: the stock sizes are whole centimetres, so cutting the decimals snaps a canvas measured at 73.4 onto 73 exactly. Measured from the truncated field, Chicago's French rate would be <span id="aicTrunc"></span> instead of <span id="aicReal"></span>, a finding flattered by the database rather than the paintings. This page parses the text label instead.</li>
+      <li><b>Chicago's search stops at 1,000 results.</b> Asking for page 11 of a 100-per-page query returns HTTP 403, not an empty page. The fetch is split into date ranges that each hold fewer than a thousand paintings and stops if one does not.</li>
+      <li><b>Where the measurements fall.</b> For French paintings within 2.5 cm of a stock size, the median overshoot is <span id="resid"></span>. A museum measures a canvas as it is now, stretched and sometimes relined, so a few millimetres over the nominal size is what one would expect. The peak sits on zero in both museums.</li>
+    </ul>
+    <h3>The failed half</h3>
+    <ul>
+      <li><b>No period French catalogue.</b> The plan was to take the French sizes from a nineteenth-century colourman's price list rather than a modern chart. A full-text search of Gallica returned one candidate: the Menier <i>Catalogue commercial ou prix courant g&eacute;n&eacute;ral</i> of 1860 (ark:/12148/bpt6k946633g, 690 pages), whose text contains <i>figure</i>, <i>paysage</i> and <i>marine</i>. Its text view sits behind an ALTCHA proof-of-work page, and after the first ALTO page <code>gallica.bnf.fr</code> refused every connection from this address for the rest of that session. When it answered again, its own in-document search showed the hit was false. Menier was a wholesale druggist; its <i>paysages</i> and <i>marine</i> are painted window blinds, and it lists no artists' canvas at all. The real candidates, Sennelier's catalogues of 1896, 1902 and 1912, are held by the Biblioth&egrave;que Forney and found through the same search, but its viewer is a JavaScript application with no image endpoint this build could reach. The other places searched (archive.org full text, HathiTrust behind a Cloudflare check, the painting manuals of Bouvier, 1827, and Arsenne, 1833) gave no table. Bouvier mentions canvases sold ready-stretched but advises buying a roll, to be free to vary the proportions.</li>
+      <li><b>What stands in for it.</b> Only indirect evidence that the modern chart matches the old sizes: the measurements of the paintings themselves peak within a few millimetres of it in both museums, and a chart off by even three per cent would lose most of them (see the sweep). That is evidence about the paintings, not about any catalogue, and it is weaker than a period price list would have been.</li>
+    </ul>
+    <h3>What this does not say</h3>
+    <ul>
+      <li>It does not say any single painting was bought ready-made. Stretchers were sold in the stock sizes on their own, and a painter could tack his own canvas to one. A dot on the grid says the support is a stock size, not who stretched it.</li>
+      <li>It is not a sample of French painting. It is what two American museums chose to collect, heavy on the Impressionists and on easel pictures. Large Salon machines and decorative commissions are rarer here than they were in Paris.</li>
+      <li>Nationality is a proxy for where the canvas was bought. A Spaniard or an American working in Paris bought Paris canvas; the Spanish rate is high for that reason.</li>
+      <li>A canvas relined, trimmed or with its tacking margins opened out may have left the grid after it left the shop. That can only lower the rates.</li>
+      <li>The subject tags are the museums' and are uneven. The seascape test rests on a few dozen paintings in each museum.</li>
+    </ul>
+    <h3>Code</h3>
+    <ul><li>MIT. The fetch and shaping scripts are in the repository's <code>src/</code>, and <code>REBUILD.md</code> lists the expected values.</li></ul>
+  </div>
+</section>
+
+<footer>Off the Shelf. Data from the Metropolitan Museum of Art and the Art Institute of Chicago (CC0), the Internet Archive and English Wikipedia (CC BY-SA). Nothing is fetched while you read except the visit count.</footer>
+</div>
+
+<script>
+const D = __PAYLOAD__;
+
+/* ---------- decode ---------- */
+function dec(b64, T){ const s=atob(b64), u=new Uint8Array(s.length); for(let i=0;i<s.length;i++) u[i]=s.charCodeAt(i); return new T(u.buffer); }
+const N = D.n;
+const MUS = dec(D.museum, Uint8Array), YEAR = dec(D.year, Int16Array), NAT = dec(D.nat, Uint8Array);
+const Lmm = dec(D.L, Uint16Array), Smm = dec(D.S, Uint16Array), SUBJ = dec(D.subj, Uint8Array);
+const ALT = dec(D.alt, Uint8Array), ART = dec(D.artist, Uint16Array), OID = dec(D.oid, Uint32Array);
+const L = new Float64Array(N), S = new Float64Array(N);
+for(let i=0;i<N;i++){ L[i]=Lmm[i]/10; S[i]=Smm[i]/10; }
+const FR = D.nats.indexOf("French"), AM = D.nats.indexOf("American");
+const SUBJECT = Object.fromEntries(D.subjects.map((s,i)=>[s,i]));
+const MNAME = ["Metropolitan Museum","Art Institute of Chicago"], MSHORT=["Met","Art Institute"];
+
+/* ---------- the two catalogues ---------- */
+const GRID = [];   // [long, short, number, shape]
+for(const [n,Lg,F,P,M] of D.french){ GRID.push([Lg,F,n,"F"],[Lg,P,n,"P"],[Lg,M,n,"M"]); }
+const DEVOE = D.devoe.map(([a,b])=>[Math.max(a,b)*2.54, Math.min(a,b)*2.54, a+"×"+b+" in", "in"]);
+const TOL = 1.0;
+const DECOYS = [0.90,0.92,0.94,0.96,1.04,1.06,1.08,1.10];
+
+function nearest(l, s, k, grid){
+  let bd=1e9, bi=-1;
+  for(let j=0;j<grid.length;j++){
+    const g=grid[j], d=Math.max(Math.abs(l-g[0]*k), Math.abs(s-g[1]*k));
+    if(d<bd){ bd=d; bi=j; }
+  }
+  return [bd, bi];
+}
+// precomputed nearest stock size at the true scale
+const NEAR_D = new Float64Array(N), NEAR_I = new Int16Array(N);
+for(let i=0;i<N;i++){ const [d,j]=nearest(L[i],S[i],1,GRID); NEAR_D[i]=d; NEAR_I[i]=j; }
+
+function sel(f){ const out=[]; for(let i=0;i<N;i++) if(f(i)) out.push(i); return out; }
+const inYears=(i,a,b)=>YEAR[i]!==-32768 && YEAR[i]>=a && YEAR[i]<=b;
+function rate(idx, k=1, grid=GRID, tol=TOL, Larr=L, Sarr=S){
+  if(!idx.length) return NaN;
+  let h=0;
+  for(const i of idx){ if(ALT[i]) continue; if(nearest(Larr[i],Sarr[i],k,grid)[0]<=tol) h++; }
+  return h/idx.filter(i=>!ALT[i]).length;
+}
+const decoy=(idx,grid=GRID)=>DECOYS.reduce((a,k)=>a+rate(idx,k,grid),0)/DECOYS.length;
+const pct=(x,d=0)=>isFinite(x)?(100*x).toFixed(d)+"%":"n/a";
+const fmt=n=>n.toLocaleString("en-US");
+const usable=idx=>idx.filter(i=>!ALT[i]);
+
+/* ---------- the headline groups ---------- */
+const HEAD = [0,1].map(m=>sel(i=>MUS[i]===m && NAT[i]===FR && inYears(i,1840,1929)));
+const AMER = [0,1].map(m=>sel(i=>MUS[i]===m && NAT[i]===AM && inYears(i,1840,1929)));
+const headReal = HEAD.map(g=>rate(g)), headDecoy = HEAD.map(g=>decoy(g));
+
+/* ---------- the control: sweep the scale ---------- */
+const KS=[]; for(let k=0.80;k<=1.2001;k+=0.0025) KS.push(+k.toFixed(4));
+const SWEEP = HEAD.map(g=>KS.map(k=>rate(g,k)));
+const SWEEP_AM = AMER.map(g=>KS.map(k=>rate(g,k)));
+const control = [0,1].map(m=>{
+  let worst=0, wk=1;
+  KS.forEach((k,j)=>{ if(Math.abs(k-1)>=0.04-1e-9 && SWEEP[m][j]>worst){ worst=SWEEP[m][j]; wk=k; } });
+  return {worst, wk, pass: worst < headReal[m]/2};
+});
+const CONTROL_OK = control.every(c=>c.pass);
+
+/* ---------- hero ---------- */
+document.getElementById("nRows").textContent = fmt(N);
+if(!CONTROL_OK){
+  const w=document.getElementById("withheld");
+  w.style.display="block";
+  w.textContent="Headline withheld: a decoy catalogue at least four per cent off the real one caught half as many paintings as the real one ("+control.map((c,m)=>MSHORT[m]+" "+pct(c.worst)+" at ×"+c.wk).join(", ")+"). The method cannot tell this grid from chance.";
+  document.getElementById("finding").style.opacity=.35;
+}
+const bon = D.artists.indexOf("Pierre Bonnard");
+const bonIdx = sel(i=>ART[i]===bon && MUS[i]===0 && inYears(i,1840,1929) && !ALT[i]);
+const bonHit = bonIdx.filter(i=>NEAR_D[i]<=TOL).length;
+document.getElementById("nums").innerHTML = [
+  [pct(headReal[0]), `of ${fmt(usable(HEAD[0]).length)} French paintings, 1840 to 1929, at the <span class="m0">Met</span> sit on the grid`],
+  [pct(headReal[1]), `of ${fmt(usable(HEAD[1]).length)} at the <span class="m1">Art Institute</span>, measured independently`],
+  [pct(headDecoy[0])+" / "+pct(headDecoy[1]), `caught by decoy catalogues 4 to 10% too big or too small: the chance level`],
+  [bonHit+" of "+bonIdx.length, `Bonnard canvases at the Met on the grid. He cut his pictures from a roll pinned to the wall`],
+].map(([v,d])=>`<div><div class="v">${v}</div><div class="d">${d}</div></div>`).join("");
+
+/* ---------- svg helpers ---------- */
+const NS="http://www.w3.org/2000/svg";
+function el(tag, attrs, parent){ const e=document.createElementNS(NS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); if(parent) parent.appendChild(e); return e; }
+function txt(parent, x, y, s, attrs={}){ const t=el("text",Object.assign({x,y},attrs),parent); t.textContent=s; return t; }
+const COLF={F:"var(--F)",P:"var(--P)",M:"var(--M)"};
+
+/* hero stack: the three shapes nested to scale */
+(function(){
+  const sv=document.getElementById("stack"), sc=1.0, oy=200, names={F:"figure",P:"paysage",M:"marine"};
+  ["F","P","M"].forEach((shape,c)=>{
+    const ox=4+c*110;
+    for(const g of GRID.filter(g=>g[3]===shape && g[2]<=40)){
+      el("rect",{x:ox, y:oy-g[1]*sc, width:g[0]*sc, height:g[1]*sc, fill:COLF[shape], "fill-opacity":0.035, stroke:COLF[shape], "stroke-width":1},sv);
+    }
+    txt(sv, ox, oy+18, names[shape], {fill:COLF[shape], "font-size":12});
+  });
+  txt(sv, 4, oy+38, "Nos. 0 to 40 of each, to scale", {"font-size":10});
+})();
+
+/* ---------- 1. scatter ---------- */
+const GROUPS = [
+  {id:"fr", label:"French, 1840 to 1929", f:i=>NAT[i]===FR && inYears(i,1840,1929)},
+  {id:"am", label:"American, 1840 to 1929", f:i=>NAT[i]===AM && inYears(i,1840,1929)},
+  {id:"old", label:"French, before 1800", f:i=>NAT[i]===FR && YEAR[i]!==-32768 && YEAR[i]<1800},
+  {id:"rest", label:"Everyone else, 1840 to 1929", f:i=>NAT[i]!==FR && NAT[i]!==AM && inYears(i,1840,1929)},
+];
+let gSel="fr", mSel=0, scPts=[];
+function chipRow(host, items, cur, on){
+  host.innerHTML="";
+  for(const it of items){
+    const b=document.createElement("button"); b.className="chip"; b.textContent=it.label;
+    b.setAttribute("aria-pressed", it.id===cur); b.onclick=()=>{ on(it.id); [...host.children].forEach(c=>c.setAttribute("aria-pressed", c===b)); };
+    host.appendChild(b);
+  }
+}
+const SX0=50, SX1=940, SY0=520, SY1=20, LMAX=172, SMAX=136;
+const sx=l=>SX0+(l-10)/(LMAX-10)*(SX1-SX0), sy=s=>SY0-(s-5)/(SMAX-5)*(SY0-SY1);
+function drawScatter(){
+  const sv=document.getElementById("scatter"); sv.innerHTML="";
+  for(let v=20; v<=170; v+=10){ el("line",{x1:sx(v),x2:sx(v),y1:SY0,y2:SY1,stroke:"var(--rule2)"},sv); txt(sv,sx(v),SY0+16,v,{"text-anchor":"middle"}); }
+  for(let v=10; v<=130; v+=10){ el("line",{x1:SX0,x2:SX1,y1:sy(v),y2:sy(v),stroke:"var(--rule2)"},sv); txt(sv,SX0-8,sy(v)+4,v,{"text-anchor":"end"}); }
+  txt(sv,SX1,SY0+34,"long side, cm →",{"text-anchor":"end"});
+  txt(sv,SX0-40,SY1-4,"short side, cm",{});
+  for(const g of GRID){
+    if(g[0]>LMAX) continue;
+    el("rect",{x:sx(g[0]-TOL),y:sy(g[1]+TOL),width:sx(g[0]+TOL)-sx(g[0]-TOL),height:sy(g[1]-TOL)-sy(g[1]+TOL),fill:COLF[g[3]],"fill-opacity":.22,stroke:COLF[g[3]],"stroke-width":1},sv);
+    if(g[3]==="F" && g[2]>=10) txt(sv,sx(g[0]),sy(g[1]+TOL)-4,g[2],{"text-anchor":"middle",fill:"var(--F)","font-size":10});
+  }
+  const G=GROUPS.find(g=>g.id===gSel);
+  scPts=sel(i=>MUS[i]===mSel && G.f(i) && L[i]<=LMAX && S[i]<=SMAX);
+  const off=el("g",{},sv), on=el("g",{},sv);
+  for(const i of scPts){
+    const hit=NEAR_D[i]<=TOL && !ALT[i];
+    el("circle",{cx:sx(L[i]),cy:sy(S[i]),r:hit?2.6:2.2,fill:hit?"var(--ink)":"var(--off)"},hit?on:off);
+  }
+  const ring=el("circle",{r:7,fill:"none",stroke:"var(--ink)","stroke-width":1.5,opacity:0},sv);
+  const all=sel(i=>MUS[i]===mSel && G.f(i));
+  const r=rate(all), d=decoy(all);
+  document.getElementById("scStat").textContent=`${MNAME[mSel]}, ${G.label}: ${fmt(usable(all).length)} paintings, ${pct(r)} on the grid; decoy catalogues catch ${pct(d)}.`;
+  sv.onmousemove=e=>{
+    const pt=sv.createSVGPoint(); pt.x=e.clientX; pt.y=e.clientY; const p=pt.matrixTransform(sv.getScreenCTM().inverse());
+    let bi=-1,bd=196;
+    for(const i of scPts){ const dx=sx(L[i])-p.x, dy=sy(S[i])-p.y, d=dx*dx+dy*dy; if(d<bd){bd=d;bi=i;} }
+    const tip=document.getElementById("scTip");
+    if(bi<0){ ring.setAttribute("opacity",0); return; }
+    ring.setAttribute("cx",sx(L[bi])); ring.setAttribute("cy",sy(S[bi])); ring.setAttribute("opacity",1);
+    const g=GRID[NEAR_I[bi]], nm={F:"figure",P:"paysage",M:"marine"}[g[3]];
+    const url=MUS[bi]===0?`https://www.metmuseum.org/art/collection/search/${OID[bi]}`:`https://www.artic.edu/artworks/${OID[bi]}`;
+    tip.innerHTML=`<a href="${url}" target="_blank" rel="noopener">${esc(D.title[bi])}</a>, ${esc(D.artists[ART[bi]])}, ${YEAR[bi]===-32768?"undated":YEAR[bi]}<br>${L[bi].toFixed(1)} × ${S[bi].toFixed(1)} cm. Nearest stock size: No. ${g[2]} ${nm} (${g[0]} × ${g[1]}), off by ${NEAR_D[bi].toFixed(1)} cm${ALT[bi]?" (support altered; not counted)":""}.`;
+  };
+  sv.onclick=()=>{ const a=document.querySelector("#scTip a"); if(a) window.open(a.href,"_blank","noopener"); };
+}
+function esc(s){ return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+chipRow(document.getElementById("grpChips"), GROUPS, gSel, id=>{gSel=id; drawScatter();});
+chipRow(document.getElementById("musChips"), [{id:0,label:"Metropolitan Museum"},{id:1,label:"Art Institute of Chicago"}], mSel, id=>{mSel=id; drawScatter();});
+drawScatter();
+
+/* ---------- 2. sweep ---------- */
+(function(){
+  const sv=document.getElementById("sweep"), X0=56,X1=940,Y0=320,Y1=16, YM=0.6;
+  const x=k=>X0+(k-0.8)/0.4*(X1-X0), y=v=>Y0-v/YM*(Y0-Y1);
+  el("rect",{x:x(0.96),y:Y1,width:x(1.04)-x(0.96),height:Y0-Y1,fill:"var(--sunk)"},sv);
+  for(let v=0; v<=YM+1e-9; v+=0.1){ el("line",{x1:X0,x2:X1,y1:y(v),y2:y(v),stroke:"var(--rule2)"},sv); txt(sv,X0-8,y(v)+4,Math.round(v*100)+"%",{"text-anchor":"end"}); }
+  for(let k=0.8; k<=1.2001; k+=0.05){ txt(sv,x(k),Y0+18,"×"+k.toFixed(2),{"text-anchor":"middle"}); }
+  txt(sv,x(1.0),Y1+12,"the real catalogue",{"text-anchor":"middle",fill:"var(--ink2)"});
+  for(const m of [0,1]){
+    const c=m?"var(--m1)":"var(--m0)";
+    el("polyline",{points:KS.map((k,j)=>x(k)+","+y(SWEEP_AM[m][j])).join(" "),fill:"none",stroke:c,"stroke-width":1.2,opacity:.35,"stroke-dasharray":"3 3"},sv);
+    el("polyline",{points:KS.map((k,j)=>x(k)+","+y(SWEEP[m][j])).join(" "),fill:"none",stroke:c,"stroke-width":2.2},sv);
+    el("line",{x1:X0,x2:X1,y1:y(headReal[m]/2),y2:y(headReal[m]/2),stroke:c,"stroke-width":1,"stroke-dasharray":"1 4",opacity:.8},sv);
+  }
+  txt(sv,X1,y(Math.max(...headReal)/2)-6,"withdrawal line: half the real rate",{"text-anchor":"end"});
+  const vl=el("line",{y1:Y1,y2:Y0,stroke:"var(--ink3)",opacity:0},sv);
+  sv.onmousemove=e=>{
+    const pt=sv.createSVGPoint(); pt.x=e.clientX; pt.y=e.clientY; const p=pt.matrixTransform(sv.getScreenCTM().inverse());
+    const k=0.8+(p.x-X0)/(X1-X0)*0.4; let j=Math.round((k-0.8)/0.0025); j=Math.max(0,Math.min(KS.length-1,j));
+    vl.setAttribute("x1",x(KS[j])); vl.setAttribute("x2",x(KS[j])); vl.setAttribute("opacity",.6);
+    document.getElementById("swTip").textContent=`catalogue ×${KS[j].toFixed(4)}: Met ${pct(SWEEP[0][j],1)}, Art Institute ${pct(SWEEP[1][j],1)} of French paintings on the grid (American paintings ${pct(SWEEP_AM[0][j],1)}, ${pct(SWEEP_AM[1][j],1)})`;
+  };
+  const v=document.getElementById("swVerdict");
+  v.className="verdict "+(CONTROL_OK?"ok":"bad");
+  v.textContent=(CONTROL_OK?"Control holds. ":"Control drifted; headline withdrawn. ")+control.map((c,m)=>`${MSHORT[m]}: real ${pct(headReal[m])}, best decoy at least 4% away ${pct(c.worst)} (×${c.wk.toFixed(3)})`).join("; ")+".";
+})();
+
+/* ---------- 3. the wrong catalogue ---------- */
+(function(){
+  const rows=[["French paintings",FR],["American paintings",AM]];
+  let h=`<tr><th></th><th>museum</th><th class="n">n</th><th class="n">Paris grid</th><th class="n">decoy</th><th class="n">Devoe grid</th><th class="n">decoy</th></tr>`;
+  const res={};
+  for(const [lab,nat] of rows) for(const m of [0,1]){
+    const g=sel(i=>MUS[i]===m && NAT[i]===nat && inYears(i,1840,1929));
+    const r={fr:rate(g),frd:decoy(g),dv:rate(g,1,DEVOE),dvd:decoy(g,DEVOE),n:usable(g).length};
+    res[nat+"_"+m]=r;
+    const cls=(a,b)=>a>2*b?"hi":"lo";
+    h+=`<tr><td>${lab}, 1840 to 1929</td><td class="${m?"m1":"m0"}">${MSHORT[m]}</td><td class="n">${fmt(r.n)}</td><td class="n ${cls(r.fr,r.frd)}">${pct(r.fr)}</td><td class="n lo">${pct(r.frd)}</td><td class="n ${cls(r.dv,r.dvd)}">${pct(r.dv)}</td><td class="n lo">${pct(r.dvd)}</td></tr>`;
+  }
+  document.getElementById("matrix").innerHTML=h;
+  const ok=[0,1].every(m=>res[FR+"_"+m].dv < 1.5*res[FR+"_"+m].dvd && res[AM+"_"+m].dv > 2*res[AM+"_"+m].dvd);
+  const v=document.getElementById("mxVerdict"); v.className="verdict "+(ok?"ok":"bad");
+  v.textContent=ok?`French paintings fit the New York list at the decoy level in both museums (${pct(res[FR+"_0"].dv)} and ${pct(res[FR+"_1"].dv)} against ${pct(res[FR+"_0"].dvd)} and ${pct(res[FR+"_1"].dvd)}). American paintings fit it at several times the decoy level. The method finds a grid only where one was used.`
+                  :`The cross-test did not come out cleanly: read the table rather than the headline.`;
+  document.getElementById("nAm").textContent=fmt(sel(i=>MUS[i]===0 && NAT[i]===AM && inYears(i,1840,1899)).length);
+})();
+
+/* ---------- 4. timeline ---------- */
+(function(){
+  const sv=document.getElementById("timeline"), X0=56,X1=940,Y0=290,Y1=16,YM=0.7, A=1640,B=1980;
+  const x=t=>X0+(t-A)/(B-A)*(X1-X0), y=v=>Y0-v/YM*(Y0-Y1);
+  for(let v=0; v<=YM+1e-9; v+=0.1){ el("line",{x1:X0,x2:X1,y1:y(v),y2:y(v),stroke:"var(--rule2)"},sv); txt(sv,X0-8,y(v)+4,Math.round(v*100)+"%",{"text-anchor":"end"}); }
+  for(let t=A; t<=B; t+=40) txt(sv,x(t),Y0+18,t,{"text-anchor":"middle"});
+  el("rect",{x:x(1840),y:Y1,width:x(1930)-x(1840),height:Y0-Y1,fill:"var(--sunk)",opacity:.7},sv);
+  txt(sv,x(1885),Y1+12,"the headline window",{"text-anchor":"middle",fill:"var(--ink2)"});
+  const pts=[];
+  for(const m of [0,1]){
+    const c=m?"var(--m1)":"var(--m0)", line=[], segs=[line];
+    for(let t=A; t<B; t+=20){
+      const g=sel(i=>MUS[i]===m && NAT[i]===FR && inYears(i,t,t+19));
+      if(usable(g).length<12){ if(segs[segs.length-1].length) segs.push([]); continue; }
+      const r=rate(g), d=decoy(g), cx=x(t+10)+(m?4:-4);
+      segs[segs.length-1].push([cx,y(r)]);
+      el("line",{x1:cx-6,x2:cx+6,y1:y(d),y2:y(d),stroke:"var(--ink3)","stroke-width":2,opacity:.6},sv);
+      pts.push({cx,cy:y(r),s:`${MNAME[m]}, French paintings begun ${t} to ${t+19}: ${pct(r)} of ${usable(g).length} on the grid; decoys ${pct(d)}`});
+    }
+    for(const seg of segs){
+      el("polyline",{points:seg.map(p=>p.join(",")).join(" "),fill:"none",stroke:c,"stroke-width":2},sv);
+      for(const p of seg) el("circle",{cx:p[0],cy:p[1],r:4,fill:c},sv);
+    }
+  }
+  sv.onmousemove=e=>{
+    const pt=sv.createSVGPoint(); pt.x=e.clientX; pt.y=e.clientY; const p=pt.matrixTransform(sv.getScreenCTM().inverse());
+    let b=null,bd=1e9; for(const q of pts){ const d=(q.cx-p.x)**2+(q.cy-p.y)**2; if(d<bd){bd=d;b=q;} }
+    if(b) document.getElementById("tlTip").textContent=b.s;
+  };
+})();
+
+/* ---------- 5. which shape held which subject ---------- */
+(function(){
+  const subj=[["portraits","portrait"],["landscapes","landscape"],["seascapes","sea"],["everything","*"]];
+  const tally={};
+  for(const m of [0,1]){
+    let html="";
+    for(const [lab,key] of subj){
+      const c={F:0,P:0,M:0};
+      for(const i of HEAD[m]){
+        if(ALT[i] || NEAR_D[i]>TOL) continue;
+        if(key!=="*" && SUBJ[i]!==SUBJECT[key]) continue;
+        c[GRID[NEAR_I[i]][3]]++;
+      }
+      const n=c.F+c.P+c.M; tally[m+key]=c;
+      html+=`<div class="fmt"><span class="lab">${lab}</span><span class="st">${["F","P","M"].map(f=>n&&c[f]?`<span style="width:${100*c[f]/n}%;background:var(--${f})" title="${c[f]} ${({F:"figure",P:"paysage",M:"marine"})[f]}">${c[f]}</span>`:"").join("")}</span><span class="cnt">${n}</span></div>`;
+    }
+    document.getElementById("fmt"+m).innerHTML=html+`<div class="legend"><span><i style="background:var(--F)"></i>figure</span><span><i style="background:var(--P)"></i>paysage</span><span><i style="background:var(--M)"></i>marine</span></div>`;
+  }
+  const s=m=>tally[m+"sea"], tot=c=>c.F+c.P+c.M;
+  const seaM=s(0).M+s(1).M, seaN=tot(s(0))+tot(s(1));
+  const v=document.getElementById("fmtVerdict");
+  const share=c=>c.M/tot(c), lean=[0,1].map(m=>share(s(m))>share(tally[m+"*"]));
+  const figMost=[0,1].every(m=>["portrait","landscape","sea"].every(k=>{const c=tally[m+k]; return c.F>c.P && c.F>c.M;}));
+  v.textContent=`Seascapes on a figure canvas: ${s(0).F} of ${tot(s(0))} at the Met, ${s(1).F} of ${tot(s(1))} at the Art Institute. On a marine canvas: ${s(0).M} and ${s(1).M}. `+
+    `Across everything on the grid, marine holds ${pct(share(tally["0*"]))} and ${pct(share(tally["1*"]))}. `+
+    (lean[0]===lean[1] ? `Both museums lean the same way on whether seascapes favour marine.` :
+      `The museums disagree on whether seascapes favour marine (the Met's ${s(0).M} of ${tot(s(0))} says no, the Art Institute's ${s(1).M} of ${tot(s(1))} says a little); with ${tot(s(0))+tot(s(1))} seascapes in all, neither answer is evidence.`)+
+    (figMost?` Figure is the commonest shape for every subject in both museums.`:` Figure is not the commonest shape for every subject in both museums; read the bars.`);
+})();
+
+/* ---------- 6. artists ---------- */
+(function(){
+  for(const m of [0,1]){
+    const by=new Map();
+    for(const i of sel(i=>MUS[i]===m && inYears(i,1840,1929) && !ALT[i])){
+      const a=ART[i]; if(!by.has(a)) by.set(a,[0,0]); const v=by.get(a); v[0]++; if(NEAR_D[i]<=TOL) v[1]++;
+    }
+    const rows=[...by].filter(([a,v])=>v[0]>=6 && D.artists[a]).sort((p,q)=>q[1][0]-p[1][0]||q[1][1]-p[1][1]).slice(0,28);
+    const c=m?"var(--m1)":"var(--m0)";
+    document.getElementById("art"+m).innerHTML=`<tr><th>artist</th><th class="n">canvases</th><th class="n">on grid</th><th></th></tr>`+
+      rows.map(([a,v])=>`<tr><td>${esc(D.artists[a])}</td><td class="n">${v[0]}</td><td class="n">${v[1]}</td><td class="bar"><span style="width:${100*v[1]/v[0]}%;background:${c}"></span></td></tr>`).join("");
+  }
+})();
+
+/* ---------- methods figures ---------- */
+(function(){
+  document.getElementById("fMet").textContent=D.fetched.met;
+  document.getElementById("fAic").textContent=D.fetched.aic;
+  document.getElementById("nAlt").textContent=fmt(sel(i=>ALT[i]).length);
+  // Chicago's structured field truncates to whole centimetres: measure the same paintings that way
+  const TL=new Float64Array(N), TS=new Float64Array(N);
+  for(let i=0;i<N;i++){ TL[i]=Math.floor(L[i]); TS[i]=Math.floor(S[i]); }
+  document.getElementById("aicTrunc").textContent=pct(rate(HEAD[1],1,GRID,TOL,TL,TS),1);
+  document.getElementById("aicReal").textContent=pct(headReal[1],1);
+  const med=a=>{ const s=[...a].sort((p,q)=>p-q); return s.length?s[Math.floor(s.length/2)]:NaN; };
+  document.getElementById("resid").textContent=[0,1].map(m=>{
+    const r=[]; for(const i of HEAD[m]){ if(ALT[i]||NEAR_D[i]>2.5) continue; const g=GRID[NEAR_I[i]]; r.push(L[i]-g[0], S[i]-g[1]); }
+    return `${(10*med(r)).toFixed(0)} mm at the ${MSHORT[m]} (${r.length/2} paintings)`;
+  }).join(" and ");
+})();
+</script>
+</body>
+</html>
